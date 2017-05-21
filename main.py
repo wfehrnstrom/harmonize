@@ -1,7 +1,8 @@
 import struct
 import tuple_to_string as tp
 import get_bit as gb
-import get_vlr as gv
+import get_vlv as gv
+import get_meta_event as gme
 
 f = open('data/bach_846.mid', 'rb')
 filedata = f.read()
@@ -28,20 +29,21 @@ track_chunk_length = struct.unpack('>I', filedata[18:22])
 print track_chunk_length[0]
 #multiple data chunks each specifying a channel
 if(format == 1):
-    print 'Hi'
+    print 'Format 1'
 elif(format == 2):
-    print 'Hello'
+    print 'Format 2'
 else:
-    print 'no'
+    print 'Format 0'
 print header_length
 print format
 print num_chunks
 print tick_format
-[vlv, end_index] = gv.get_vlr(filedata[22:], 22)
-
-print 'end index'
+[vlv, end_index] = gv.get_vlv(filedata[22:], 22)
+end_count = gme.get_meta_event(filedata[end_index:], end_index);
+"""print 'end index'
 print end_index
-
+print 'end count:'
+print end_count"""
 
 
 
